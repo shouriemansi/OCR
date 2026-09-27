@@ -71,3 +71,28 @@ else:
 
 
 
+### OCR Image Preprocessing with OpenCV
+#This part of the OCR project uses OpenCV (cv2) to preprocess a handwritten digit image before it is given to a machine-learning model.
+#The preprocessing pipeline consists of the following steps:
+
+#1. Load the image: The digit image is loaded from the `DATA/raw` folder using cv2.imread().
+
+#2. Check whether the image was loaded successfully: The program checks whether OpenCV returned a valid image. If the image cannot be found or read, an error message is displayed.
+
+#3. Display the original image: The original digit image is displayed using cv2.imshow().
+
+#4. Convert the image to grayscale: The BGR image is converted into a grayscale image using cv2.cvtColor(). This removes unnecessary color information while preserving the brightness and shape information needed for digit recognition.
+
+#5. Apply thresholding: Binary thresholding is applied to separate the digit from the background. Pixel values below the threshold are converted to 0, while values above the threshold are converted to 255. This produces a simplified black-and-white image.
+
+#6. Resize the image: The thresholded image is resized to 28 × 28 pixels using cv2.resize(). This matches the spatial dimensions expected by the MNIST dataset, which will later be used for training the digit-recognition model.
+
+#7. Display the processed image: The resized image is displayed so that the preprocessing result can be visually inspected.
+
+#8. Keep the windows open and close them properly: cv2.waitKey(0) keeps the OpenCV windows open until a key is pressed, while cv2.destroyAllWindows() closes the windows afterward.
+
+#Processing Pipeline : Original Image → Grayscale → Threshold → Resize to 28×28 → Ready for ML Model
+
+#This preprocessing converts a real-world handwritten digit image into a standardized format that can later be passed to a machine-learning model for digit classification.
+#Currently testing the preprocessing pipeline using a single sample image.
+# Later, this pipeline will be made reusable for any input digit.
