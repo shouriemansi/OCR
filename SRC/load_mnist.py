@@ -1,19 +1,27 @@
 #MNIST gives us thousands of handwritten digit images. Each image is stored as 784 numbers (pixels), and each image has a correct answer/label. MNIST is one of the most commonly used datasets for learning handwritten digit recognition.
 
+
 #scikit-learn (sklearn) is a popular Python machine-learning library. fetch_openml() allows us to download/fetch datasets that are available on OpenML. We use it here to obtain the MNIST handwritten digit dataset. 
 from sklearn.datasets import fetch_openml
+
+
 # matplotlib is used to display images and create graphs.
 import matplotlib.pyplot as plt
 
+
+from sklearn.linear_model import LogisticRegression
 
 print("Loading MNIST...")
 
 #Fetch the MNIST dataset from OpenML.
 mnist = fetch_openml(
     "mnist_784",     #This is the name of the MNIST dataset on OpenML.
+
     version=1,       #This specifies the version of the dataset we want to use.
+
     as_frame=False   #This tells scikit-learn NOT to return the data as a pandas DataFrame. Instead, we get NumPy-style arrays, which are convenient for machine-learning operations.
 )
+
 # Because many traditional ML algorithms expect each example to be represented as a single row of features.Flattening is basically converting the image from a visual format into a format that a traditional ML model can directly use as input. Since: 28 × 28 = 784. one MNIST image can be represented as: 28 × 28 image → 784 pixel values
 print("MNIST loaded!")
 
@@ -40,27 +48,35 @@ print(y[0])
 image = X[0].reshape(28, 28)
 print("Image shape:", image.shape)
 
+
 # Look at the first 5 rows and first 5 columns
 print("First 5 × 5 pixels:")
 print(image[:5, :5])
 
+
 # Get the pixel value at row 0, column 0
 print("One pixel value:", image[0, 0])
+
 
 # Show the image using Matplotlib plt.imshow() takes the 28 × 28 array of pixel values and displays it as an image. cmap="gray" tells Matplotlib to display the image using shades of gray instead of colors. 
 plt.imshow(image, cmap="gray")
 plt.title("MNIST Image")
+
+
 # Display the image on the screen. plt.show()
 plt.show()
 
 # imshow() = what to show, takes your data and prepares it as an image.
 # show() = actually show it, actually displays the prepared plot/image.
 
+
 # How many images do we have?
 print("Number of images:", X.shape[0])
 
+
 # How many pixels does each image have?
 print("Pixels per image:", X.shape[1])
+
 
 # Look at the first 5 correct answers
 print("First 5 labels:", y[:5])
@@ -87,3 +103,31 @@ print("First 5 labels:", y[:5])
 #  display using Matplotlib
 
 # The main idea is that a handwritten image is converted into numerical pixel values, and these values will later be given to a Machine Learning model so that it can learn to recognize which digit the image represents.
+
+
+
+
+
+# Logistic Regression is our first Machine Learning algorithm for recognizing handwritten digits. We use Logistic Regression to learn the relationship between: X → pixel values of the handwritten images and y → correct digit labels (0 to 9). At this point, the model has NOT learned anything yet. We are only creating the model.
+
+
+# max_iter specifies the maximum number of times the algorithm is allowed to go through its optimization process while trying to find the best parameters for the model. We use 100 iterations here.
+
+model = LogisticRegression(
+    max_iter=100
+)
+
+print("Model created!")
+
+
+# TRAIN THE MODEL : Training means allowing the Machine Learning model to learn patterns from our examples.
+
+# fit() tells the model to learn from our examples.
+# The model looks at X and y and learns patterns that can later be used to recognize digits.
+# After fit() finishes, the model has learned from the # training data and can be used to predict digits.
+
+print("Training started...")
+
+model.fit(X, y)
+
+print("Training completed!")
