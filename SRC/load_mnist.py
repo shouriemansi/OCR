@@ -1,0 +1,89 @@
+#MNIST gives us thousands of handwritten digit images. Each image is stored as 784 numbers (pixels), and each image has a correct answer/label. MNIST is one of the most commonly used datasets for learning handwritten digit recognition.
+
+#scikit-learn (sklearn) is a popular Python machine-learning library. fetch_openml() allows us to download/fetch datasets that are available on OpenML. We use it here to obtain the MNIST handwritten digit dataset. 
+from sklearn.datasets import fetch_openml
+# matplotlib is used to display images and create graphs.
+import matplotlib.pyplot as plt
+
+
+print("Loading MNIST...")
+
+#Fetch the MNIST dataset from OpenML.
+mnist = fetch_openml(
+    "mnist_784",     #This is the name of the MNIST dataset on OpenML.
+    version=1,       #This specifies the version of the dataset we want to use.
+    as_frame=False   #This tells scikit-learn NOT to return the data as a pandas DataFrame. Instead, we get NumPy-style arrays, which are convenient for machine-learning operations.
+)
+# Because many traditional ML algorithms expect each example to be represented as a single row of features.Flattening is basically converting the image from a visual format into a format that a traditional ML model can directly use as input. Since: 28 × 28 = 784. one MNIST image can be represented as: 28 × 28 image → 784 pixel values
+print("MNIST loaded!")
+
+
+# Images: the actual image pixel data
+X = mnist.data
+
+# Correct answers: the correct digit/answer for each image
+y = mnist.target
+
+
+# Look at the first image. X contains all the images from the MNIST dataset.
+print("First image:")
+print(X[0])
+
+print()
+
+# Look at its answer, y contains the correct labels/answers for all MNIST images.
+print("Correct answer:")
+print(y[0])
+
+
+# Convert the 784 numbers back into a 28 × 28 image, reshape() DOES NOT change the pixel values. It only changes how the values are arranged.
+image = X[0].reshape(28, 28)
+print("Image shape:", image.shape)
+
+# Look at the first 5 rows and first 5 columns
+print("First 5 × 5 pixels:")
+print(image[:5, :5])
+
+# Get the pixel value at row 0, column 0
+print("One pixel value:", image[0, 0])
+
+# Show the image using Matplotlib plt.imshow() takes the 28 × 28 array of pixel values and displays it as an image. cmap="gray" tells Matplotlib to display the image using shades of gray instead of colors. 
+plt.imshow(image, cmap="gray")
+plt.title("MNIST Image")
+# Display the image on the screen. plt.show()
+plt.show()
+
+# imshow() = what to show, takes your data and prepares it as an image.
+# show() = actually show it, actually displays the prepared plot/image.
+
+# How many images do we have?
+print("Number of images:", X.shape[0])
+
+# How many pixels does each image have?
+print("Pixels per image:", X.shape[1])
+
+# Look at the first 5 correct answers
+print("First 5 labels:", y[:5])
+
+
+# This code loads the MNIST handwritten digit dataset from OpenML using scikit-learn. MNIST contains 70,000 handwritten digit images, where each image is 28 × 28 pixels. Each image contains 784 pixel values because 28 × 28 = 784.
+# When the dataset is loaded, these 28 × 28 images are stored as flattened arrays containing 784 numbers.
+# X stores the pixel values (input/features), while y stores the correct digit labels (answers) for those images.
+# X[0] gives the first image's 784 pixel values, and y[0] gives the correct digit for that image.
+# The first image is reshaped from 784 values back into a  28 × 28 grid using reshape(28, 28). This does not change the pixel values; it only changes their arrangement so the image can be displayed.
+# The code then examines some pixel values and displays the image using Matplotlib. imshow() prepares the pixel array  to be displayed as an image, while show() actually displays the figure.
+# Overall:
+# MNIST DATASET
+#      ↓
+#  X = pixel values
+#  y = correct labels
+#      ↓
+#  X[0] = first image (784 pixels)
+#      ↓
+#  reshape(28, 28)
+#      ↓
+#  28 × 28 image
+#      ↓
+#  display using Matplotlib
+
+# The main idea is that a handwritten image is converted into numerical pixel values, and these values will later be given to a Machine Learning model so that it can learn to recognize which digit the image represents.
