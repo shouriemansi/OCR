@@ -131,3 +131,25 @@ print("Training started...")
 model.fit(X, y)
 
 print("Training completed!")
+
+# These lines of code say: Create a Logistic Regression learner. Then give that learner the MNIST images (X) and their correct answers (y). Let it learn mathematical patterns from those examples. Once training is finished, we have a trained model that can be used to predict digits from new images.
+
+
+
+# MAKE OUR FIRST PREDICTION
+
+# X[0] contains the 784 pixel values of the first image.
+first_image = X[0]
+
+# The model expects: number of images × number of features
+#The trained Logistic Regression model expects the input data to have this structure: number of images × number of features. For MNIST:number of features = 784. Currently, first_image contains: 784 values. Its shape is: (784,) But the model expects a 2D structure: (number of images, number of features) Since we are giving the model only ONE image: 1 image × 784 features Therefore, we reshape: (784,) → (1, 784) The -1 tells NumPy to automatically calculate the remaining dimension.  Since there are 784 values and we specify 1 row:784 ÷ 1 = 784 So the final shape becomes: # # (1, 784)
+first_image = first_image.reshape(1, -1)
+
+# Ask the trained model to predict the digit.
+prediction = model.predict(first_image)
+
+# Display the prediction.
+print("Predicted digit:", prediction[0])
+
+# Display the actual/correct answer.
+print("Actual digit:", y[0])
